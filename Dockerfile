@@ -1,10 +1,13 @@
-FROM python:3.11-slim
-ADD ./requirements.txt /app/requirements.txt
-WORKDIR /app
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+FROM node:20-alpine
 
-ADD ./src/ /app/
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install --omit=dev
+
+COPY . .
+
 EXPOSE 10000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "10000", "--reload"]
+CMD ["npm", "start"]
