@@ -45,5 +45,5 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/todo-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/todo-app:$IMAGE_TAG
 
-      # - name: Update Render
-      #   run: curl -fsS "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+      - name: Update Render
+        run: curl -fsS "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
