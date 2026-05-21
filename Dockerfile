@@ -1,23 +1,10 @@
-FROM node:20-alpine
-
-# Set working directory
+FROM python:3.11-slim
+ADD ./requirements.txt /app/requirements.txt
 WORKDIR /app
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Copy package files
-COPY package*.json ./
-
-# Install production dependencies only
-RUN npm install --omit=dev
-
-# Copy source files
-COPY . .
-
-# Expose port
+ADD ./src/ /app/
 EXPOSE 10000
 
-# Set environment
-ENV PORT=10000
-ENV NODE_ENV=production
-
-# Start the server
-CMD ["node", "server.js"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "10000", "--reload"]
